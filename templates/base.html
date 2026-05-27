@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{% block title %}AsuhBijak | Parenting Modern & Keluarga Sakinah{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            100: '#FFFDF9',
+                            200: '#FDF6E2',
+                            300: '#F5E6C9',
+                            400: '#E6D2B5', 
+                        },
+                        teracotta: '#C97A63',
+                        warmbrown: '#8C5A4C',
+                        charcoal: '#3D3A35',
+                    },
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Nunito', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #FFFDF9;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F5E6C9;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C97A63;
+            border-radius: 10px;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(60, 45, 40, 0.15);
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #C97A63 !important;
+            background-color: rgba(255, 255, 255, 0.95);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            backdrop-filter: blur(2px);
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 18px;
+            font-weight: 800;
+        }
+        .swiper-pagination-bullet-active {
+            background: #C97A63 !important;
+            width: 26px;
+            border-radius: 6px;
+        }
+        .hamburger-line {
+            transition: all 0.3s ease-in-out;
+        }
+        .open .line-1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .open .line-2 {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .open .line-3 {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        html {
+            scroll-padding-top: 80px;
+        }
+        @media (max-width: 768px) {
+            html {
+                scroll-padding-top: 70px;
+            }
+        }
+        .kelas-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kelas-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Paper clip effects */
+        .cyan-corner-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.08);
+        }
+        .cyan-corner-card .fold-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 45px 45px 0;
+            border-color: transparent #FDF6E2 transparent transparent;
+            border-top-right-radius: 16px;
+            pointer-events: none;
+        }
+        .cyan-corner-card .fold-corner-inner {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 30px 30px 0;
+            border-color: transparent #E6D2B5 transparent transparent;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .sticky-note-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .sticky-note-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, transparent 50%, rgba(201, 122, 99, 0.05) 50%);
+            border-top-right-radius: 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .sticky-note-card::after {
+            content: '📎';
+            position: absolute;
+            top: 4px;
+            right: 6px;
+            font-size: 18px;
+            opacity: 0.4;
+            transform: rotate(25deg);
+            pointer-events: none;
+            z-index: 2;
+            font-family: 'Segoe UI', system-ui;
+        }
+        .paper-crease {
+            position: relative;
+        }
+        .paper-crease::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, transparent 50%, rgba(201, 122, 99, 0.06) 50%);
+            pointer-events: none;
+            z-index: 2;
+            border-top-right-radius: 16px;
+        }
+        .paper-clip-card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .paper-clip-card .clip-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(225deg, transparent 55%, #FDF6E2 55%);
+            border-top-right-radius: 20px;
+            z-index: 1;
+        }
+        .paper-clip-card .clip-mark {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 14px;
+            color: #C97A63;
+            opacity: 0.5;
+            z-index: 2;
+            transform: rotate(20deg);
+        }
+        
+        /* Modal styles */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-container {
+            transition: all 0.3s ease;
+            transform: scale(0.95);
+        }
+        .modal-container.active {
+            transform: scale(1);
+        }
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Messages */
+        .message {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            animation: pulse-wa 2s infinite;
+        }
+        .whatsapp-float:hover {
+            animation: none;
+            transform: scale(1.05);
+        }
+        @keyframes pulse-wa {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="antialiased">
+
+    <!-- NAVBAR WARNA COKLAT -->
+    <div class="sticky top-0 z-50">
+        <nav style="background-color: #8C5A4C;" class="shadow-md">
+            <div class="max-w-7xl mx-auto px-5 lg:px-8 py-4 flex justify-between items-center">
+                <a href="{% url 'core:index' %}" class="flex items-center gap-3 group">
+                    <div class="flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 55" width="200" height="48">
+                        <defs>
+                        <linearGradient id="teracottaGradWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FDF6E2;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#FFFDF9;stop-opacity:1" />
+                        </linearGradient>
+                        </defs>
+                        <g transform="translate(20, 30)">
+                        <path d="M0,-22 L19,-13 L19,10 Q19,20 0,26 Q-19,20 -19,10 L-19,-13 Z" fill="none" stroke="#FDF6E2" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0,-5 Q-4.5,-11 -9.5,-5 Q-11.5,2 -5,8 L0,13 L5,8 Q11.5,2 9.5,-5 Q4.5,-11 0,-5 Z" fill="#FDF6E2" opacity="0.95"/>
+                        </g>
+                        <text x="48" y="35" font-family="'Playfair Display', Georgia, serif" font-size="26" font-weight="800" fill="#FFFDF9" letter-spacing="1.5" dominant-baseline="middle">FAMA</text>
+                        <text x="128" y="35" font-family="'Playfair Display', Georgia, serif" font-size="26" font-weight="800" fill="#FDF6E2" letter-spacing="2.8" dominant-baseline="middle">LINE</text>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- DESKTOP MENU -->
+                <div class="hidden md:flex items-center gap-8 lg:gap-10">
+                    <div class="flex items-center gap-6 lg:gap-8 font-semibold text-white">
+                        <a href="{% url 'core:index' %}" class="hover:text-cream-200 transition duration-200 text-base">Beranda</a>
+                        <a href="{% url 'core:index' %}#layanan" class="hover:text-cream-200 transition duration-200">Layanan</a>
+                        <a href="{% url 'core:artikel_list' %}" class="hover:text-cream-200 transition duration-200">Artikel</a>
+                        <a href="{% url 'core:kelas' %}" class="hover:text-cream-200 transition duration-200">Kelas Singkat</a>
+                        <a href="{% url 'core:konsultasi' %}" class="hover:text-cream-200 transition duration-200">Konsultasi</a>
+                        <a href="{% url 'core:taaruf' %}" class="hover:text-cream-200 transition duration-200">Ta'aruf</a>
+                    </div>
+                    <div>
+                        {% if user.is_authenticated %}
+                            <!-- Profile Dropdown untuk Desktop -->
+                            <div class="relative group">
+                                <button class="bg-white text-warmbrown px-5 py-2.5 rounded-full font-semibold text-sm shadow-sm flex items-center gap-2 hover:bg-cream-100 transition">
+                                    <i class="fas fa-user-circle text-teracotta text-base"></i> 
+                                    <span class="max-w-[100px] truncate">{{ user.username|truncatechars:15 }}</span>
+                                    <i class="fas fa-chevron-down text-xs text-warmbrown ml-1"></i>
+                                </button>
+                                <div class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg hidden group-hover:block z-20 overflow-hidden border border-cream-200">
+                                    <div class="px-4 py-3 bg-cream-100 border-b border-cream-200">
+                                        <p class="text-sm font-semibold text-charcoal">{{ user.get_full_name|default:user.username }}</p>
+                                        <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
+                                    </div>
+                                    <a href="{% url 'core:index' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-cream-50 transition">
+                                        <i class="fas fa-home w-4 text-teracotta"></i> Dashboard
+                                    </a>
+                                    <a href="{% url 'core:my_classes' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-cream-50 transition">
+                                        <i class="fas fa-book w-4 text-teracotta"></i> Kelas Saya
+                                    </a>
+                                    <a href="{% url 'core:konsultasi' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-cream-50 transition">
+                                        <i class="fas fa-calendar-alt w-4 text-teracotta"></i> Riwayat Konsultasi
+                                    </a>
+                                    <div class="border-t border-cream-100 my-1"></div>
+                                    <a href="{% url 'accounts:logout' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition rounded-b-xl">
+                                        <i class="fas fa-sign-out-alt w-4"></i> Logout
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}" class="bg-white text-warmbrown px-6 py-2.5 rounded-full hover:shadow-md transition-all duration-200 font-semibold text-sm shadow-sm hover:bg-cream-100 whitespace-nowrap">Gabung Komunitas</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- MOBILE MENU BUTTON -->
+                <button id="menu-btn" class="block md:hidden focus:outline-none z-50 p-2" aria-label="Menu">
+                    <div class="w-6 h-5 flex flex-col justify-between">
+                        <span class="hamburger-line line-1 w-full h-0.5 bg-white rounded-full"></span>
+                        <span class="hamburger-line line-2 w-full h-0.5 bg-white rounded-full"></span>
+                        <span class="hamburger-line line-3 w-full h-0.5 bg-white rounded-full"></span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- MOBILE SIDEBAR -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-all duration-300 md:hidden"></div>
+    <div id="mobile-sidebar" class="fixed top-0 left-0 bottom-0 w-4/5 max-w-sm z-50 p-6 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-out md:hidden flex flex-col justify-between" style="background-color: #8C5A4C;">
+        <div class="space-y-6">
+            <div class="pb-5 border-b border-white/20">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 55" width="200" height="48">
+                <defs>
+                <linearGradient id="teracottaGradWhiteMob" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FDF6E2;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#FFFDF9;stop-opacity:1" />
+                </linearGradient>
+                </defs>
+                <g transform="translate(20, 30)">
+                <path d="M0,-22 L19,-13 L19,10 Q19,20 0,26 Q-19,20 -19,10 L-19,-13 Z" fill="none" stroke="#FDF6E2" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0,-5 Q-4.5,-11 -9.5,-5 Q-11.5,2 -5,8 L0,13 L5,8 Q11.5,2 9.5,-5 Q4.5,-11 0,-5 Z" fill="#FDF6E2" opacity="0.95"/>
+                </g>
+                <text x="48" y="35" font-family="'Playfair Display', Georgia, serif" font-size="26" font-weight="800" fill="#FFFDF9" letter-spacing="1.5" dominant-baseline="middle">FAMA</text>
+                <text x="128" y="35" font-family="'Playfair Display', Georgia, serif" font-size="26" font-weight="800" fill="#FDF6E2" letter-spacing="2.8" dominant-baseline="middle">LINE</text>
+                </svg>
+            </div>
+            
+            <!-- Profile Section for Mobile (Jika Login) -->
+            {% if user.is_authenticated %}
+            <div class="flex items-center gap-3 text-white/90 pb-3 border-b border-white/20">
+                <i class="fas fa-user-circle text-3xl"></i>
+                <div>
+                    <p class="font-semibold">{{ user.username }}</p>
+                    <p class="text-xs text-cream-200 truncate max-w-[200px]">{{ user.email }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <nav class="flex flex-col gap-3">
+                <a href="{% url 'core:index' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2 border-b border-white/10">
+                    <i class="fas fa-home w-5"></i> Beranda
+                </a>
+                <a href="{% url 'core:index' %}#layanan" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2 border-b border-white/10">
+                    <i class="fas fa-hand-holding-heart w-5"></i> Layanan Unggulan
+                </a>
+                <a href="{% url 'core:artikel_list' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2 border-b border-white/10">
+                    <i class="fas fa-newspaper w-5"></i> Artikel
+                </a>
+                <a href="{% url 'core:kelas' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2 border-b border-white/10">
+                    <i class="fas fa-chalkboard-user w-5"></i> Kelas Singkat
+                </a>
+                <a href="{% url 'core:konsultasi' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2 border-b border-white/10">
+                    <i class="fas fa-headset w-5"></i> Konsultasi
+                </a>
+                <a href="{% url 'core:taaruf' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2 border-b border-white/10">
+                    <i class="fas fa-handshake w-5"></i> Ta'aruf
+                </a>
+                
+                {% if user.is_authenticated %}
+                <div class="mt-2 pt-2 border-t border-white/20">
+                    <a href="{% url 'core:my_classes' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2">
+                        <i class="fas fa-book w-5"></i> Kelas Saya
+                    </a>
+                    <a href="{% url 'core:konsultasi' %}" class="mobile-link flex items-center gap-3 text-base font-semibold text-white/90 hover:text-cream-200 transition py-2">
+                        <i class="fas fa-calendar-alt w-5"></i> Riwayat Konsultasi
+                    </a>
+                </div>
+                {% endif %}
+            </nav>
+        </div>
+        <div class="pt-6 border-t border-white/20">
+            {% if user.is_authenticated %}
+                <a href="{% url 'accounts:logout' %}" class="mobile-link block bg-white/20 text-white text-center py-3 rounded-xl font-bold hover:bg-white/30 transition">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </a>
+            {% else %}
+                <a href="{% url 'accounts:login' %}" class="mobile-link block bg-white text-warmbrown text-center py-3 rounded-xl font-bold shadow-md hover:bg-cream-100 transition">
+                    <i class="fas fa-user-plus mr-2"></i> Gabung Sekarang
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- MESSAGES -->
+    {% if messages %}
+        <div class="message space-y-2">
+            {% for message in messages %}
+                <div class="px-4 py-3 rounded-lg shadow-lg {% if message.tags == 'success' %}bg-green-500 text-white{% elif message.tags == 'error' %}bg-red-500 text-white{% else %}bg-blue-500 text-white{% endif %}">
+                    <i class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %} mr-2"></i>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/6281234567890?text=Halo%20AsuhBijak%2C%20saya%20ingin%20konsultasi%20parenting" target="_blank" class="whatsapp-float bg-green-500 rounded-full p-4 shadow-xl hover:shadow-2xl transition-all flex items-center gap-2 fixed bottom-6 right-6 z-50">
+        <i class="fab fa-whatsapp text-white text-2xl"></i>
+        <span class="text-white text-sm font-semibold hidden md:inline">Chat Kami</span>
+    </a>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="backToTop" class="back-to-top bg-teracotta text-white rounded-full p-3 shadow-lg hover:bg-warmbrown transition-all fixed bottom-6 left-6 z-50">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <!-- FOOTER -->
+    <footer class="pt-12 pb-8 mt-20" style="background-color: #8C5A4C;">
+        <div class="max-w-7xl mx-auto px-5 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-white/20 pb-8">
+                <div class="text-center md:text-left">
+                    <p class="font-bold text-white text-2xl">Asuh<span class="text-cream-200">Bijak</span></p>
+                    <p class="text-cream-100 text-sm mt-2 max-w-md">Membangun generasi berkarakter melalui pendampingan parenting modern dan keluarga sakinah.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="openModal('instagram')" class="social-icon w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                        <i class="fab fa-instagram text-white text-lg"></i>
+                    </button>
+                    <button onclick="openModal('facebook')" class="social-icon w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                        <i class="fab fa-facebook-f text-white text-lg"></i>
+                    </button>
+                    <button onclick="openModal('twitter')" class="social-icon w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                        <i class="fab fa-twitter text-white text-lg"></i>
+                    </button>
+                    <button onclick="openModal('tiktok')" class="social-icon w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300">
+                        <i class="fab fa-tiktok text-white text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-6">
+                <div class="flex flex-wrap justify-center gap-6 text-sm">
+                    <button onclick="openModal('privacy')" class="text-cream-100 hover:text-cream-200 transition">Kebijakan Privasi</button>
+                    <button onclick="openModal('contact')" class="text-cream-100 hover:text-cream-200 transition">Kontak & Bantuan</button>
+                </div>
+                <div class="text-center text-cream-100/70 text-xs">
+                    © 2026 AsuhBijak — Membangun Generasi Berkarakter
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL SYSTEM -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/60 z-[100] opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div id="modalContainer" class="bg-white rounded-2xl max-w-md w-full transform scale-95 transition-all duration-300 shadow-2xl overflow-hidden">
+            <div id="modalContent" class="p-6"></div>
+            <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 bg-teracotta text-white rounded-lg font-semibold hover:bg-opacity-85 transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Modal Data
+        const modalData = {
+            instagram: { title: "Instagram @AsuhBijak", content: "<div class='text-center'><div class='w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4'><i class='fab fa-instagram text-3xl text-white'></i></div><h3 class='text-xl font-bold text-charcoal mb-2'>@asuhbijak</h3><p class='text-gray-500 text-sm mb-4'>Ikuti kami di Instagram untuk tips parenting harian, live diskusi, dan inspirasi keluarga sakinah.</p><div class='bg-cream-100 rounded-lg p-3 text-sm'><span class='font-semibold'>📊 45.2rb pengikut</span><br><span>✨ 1.200+ konten edukasi</span></div><a href='https://instagram.com/asuhbijak' target='_blank' class='mt-4 inline-block w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition'>Kunjungi Instagram →</a></div>" },
+            facebook: { title: "Facebook AsuhBijak", content: "<div class='text-center'><div class='w-20 h-20 bg-[#1877F2] rounded-2xl flex items-center justify-center mx-auto mb-4'><i class='fab fa-facebook-f text-3xl text-white'></i></div><h3 class='text-xl font-bold text-charcoal mb-2'>AsuhBijak Parenting</h3><p class='text-gray-500 text-sm mb-4'>Bergabunglah dengan komunitas orang tua di Facebook, bagikan pengalaman dan dapatkan dukungan.</p><div class='bg-cream-100 rounded-lg p-3 text-sm'><span class='font-semibold'>👥 28.7rb anggota grup</span><br><span>💬 Diskusi aktif setiap hari</span></div><a href='https://facebook.com/asuhbijak' target='_blank' class='mt-4 inline-block w-full bg-[#1877F2] text-white py-3 rounded-xl font-semibold hover:shadow-lg transition'>Kunjungi Facebook →</a></div>" },
+            twitter: { title: "Twitter / X @AsuhBijak", content: "<div class='text-center'><div class='w-20 h-20 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4'><i class='fab fa-twitter text-3xl text-white'></i></div><h3 class='text-xl font-bold text-charcoal mb-2'>@asuhbijak</h3><p class='text-gray-500 text-sm mb-4'>Dapatkan update artikel, thread parenting, dan diskusi ringan seputar tumbuh kembang anak.</p><div class='bg-cream-100 rounded-lg p-3 text-sm'><span class='font-semibold'>🐦 12.3rb pengikut</span><br><span>📢 Update mingguan</span></div><a href='https://twitter.com/asuhbijak' target='_blank' class='mt-4 inline-block w-full bg-black text-white py-3 rounded-xl font-semibold hover:shadow-lg transition'>Kunjungi Twitter →</a></div>" },
+            tiktok: { title: "TikTok @AsuhBijak", content: "<div class='text-center'><div class='w-20 h-20 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4'><i class='fab fa-tiktok text-3xl text-white'></i></div><h3 class='text-xl font-bold text-charcoal mb-2'>@asuhbijak</h3><p class='text-gray-500 text-sm mb-4'>Konten video singkat tips parenting, simulasi komunikasi anak, dan challenge seru.</p><div class='bg-cream-100 rounded-lg p-3 text-sm'><span class='font-semibold'>🎵 67.8rb pengikut</span><br><span>🎬 500k+ total likes</span></div><a href='https://tiktok.com/@asuhbijak' target='_blank' class='mt-4 inline-block w-full bg-black text-white py-3 rounded-xl font-semibold hover:shadow-lg transition'>Kunjungi TikTok →</a></div>" },
+            privacy: { title: "Kebijakan Privasi", content: "<div class='space-y-3'><p class='text-gray-600 text-sm'>Kami menghormati privasi Anda. Informasi pribadi yang Anda berikan akan kami jaga kerahasiaannya dan tidak akan dibagikan kepada pihak ketiga tanpa izin Anda.</p><div class='bg-cream-100 p-3 rounded-lg'><span class='font-semibold text-charcoal'>📌 Data yang Dikumpulkan:</span><ul class='text-sm text-gray-500 mt-1 list-disc pl-4'><li>Nama & kontak (email/WA)</li><li>Data konsultasi (rahasia)</li><li>Preferensi layanan</li></ul></div><div class='bg-cream-100 p-3 rounded-lg'><span class='font-semibold text-charcoal'>🔒 Keamanan:</span><p class='text-sm text-gray-500 mt-1'>Semua data dilindungi enkripsi dan hanya diakses oleh tim terbatas.</p></div><p class='text-xs text-gray-400 mt-2'>Terakhir diperbarui: Januari 2026</p></div>" },
+            contact: { title: "Kontak & Bantuan", content: "<div class='space-y-3'><div class='flex items-center gap-3 p-3 bg-cream-100 rounded-lg'><i class='fas fa-envelope text-2xl text-teracotta'></i><div><p class='font-semibold'>Email</p><a href='mailto:hello@asuhbijak.com' class='text-teracotta text-sm'>hello@asuhbijak.com</a></div></div><div class='flex items-center gap-3 p-3 bg-cream-100 rounded-lg'><i class='fab fa-whatsapp text-2xl text-green-500'></i><div><p class='font-semibold'>WhatsApp</p><a href='https://wa.me/6281234567890' class='text-teracotta text-sm'>+62 812-3456-7890</a></div></div><div class='flex items-center gap-3 p-3 bg-cream-100 rounded-lg'><i class='fas fa-clock text-2xl text-teracotta'></i><div><p class='font-semibold'>Jam Operasional</p><p class='text-sm text-gray-500'>Senin - Jumat, 09.00 - 17.00 WIB</p></div></div><p class='text-xs text-gray-400 text-center mt-2'>Balasan dalam 1x24 jam</p></div>" }
+        };
+
+        function openModal(type) {
+            const data = modalData[type];
+            if (!data) return;
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContainer = document.getElementById('modalContainer');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `<div class="flex justify-between items-center mb-4 border-b border-gray-100 pb-3"><h2 class="text-xl font-bold text-charcoal">${data.title}</h2></div>${data.content}`;
+            modalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            modalOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            setTimeout(() => { modalContainer.classList.remove('scale-95'); modalContainer.classList.add('scale-100'); }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalContainer = document.getElementById('modalContainer');
+            modalContainer.classList.remove('scale-100'); modalContainer.classList.add('scale-95');
+            modalOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+            modalOverlay.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modalOverlay')?.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+    </script>
+
+    <script>
+        // Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        function openMenu() {
+            menuBtn.classList.add('open');
+            mobileSidebar.classList.remove('-translate-x-full');
+            mobileSidebar.classList.add('translate-x-0');
+            mobileOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            mobileOverlay.classList.add('opacity-100', 'pointer-events-auto');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            menuBtn.classList.remove('open');
+            mobileSidebar.classList.add('-translate-x-full');
+            mobileSidebar.classList.remove('translate-x-0');
+            mobileOverlay.classList.add('opacity-0', 'pointer-events-none');
+            mobileOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+            document.body.style.overflow = '';
+        }
+        if(menuBtn) menuBtn.addEventListener('click', (e) => { e.stopPropagation(); if(mobileSidebar.classList.contains('-translate-x-full')) openMenu(); else closeMenu(); });
+        if(mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+        
+        // Back to Top
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Auto hide messages
+        setTimeout(() => {
+            const messages = document.querySelectorAll('.message');
+            messages.forEach(msg => msg.remove());
+        }, 5000);
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === "#" || targetId === "") return;
+                const targetElem = document.querySelector(targetId);
+                if(targetElem) { 
+                    e.preventDefault(); 
+                    targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+                }
+            });
+        });
+
+        // Initialize Swiper (if exists)
+        if (typeof Swiper !== 'undefined') {
+            if (document.querySelector('.mySwiper')) {
+                new Swiper(".mySwiper", { 
+                    slidesPerView: 1, 
+                    spaceBetween: 24, 
+                    loop: true, 
+                    autoplay: { delay: 4500, disableOnInteraction: false }, 
+                    pagination: { el: ".swiper-pagination", clickable: true }, 
+                    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }, 
+                    breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } 
+                });
+            }
+            if (document.querySelector('.kelasSwiper')) {
+                new Swiper(".kelasSwiper", { 
+                    slidesPerView: 1, 
+                    spaceBetween: 24, 
+                    loop: true, 
+                    autoplay: { delay: 5000, disableOnInteraction: false }, 
+                    pagination: { el: ".kelas-pagination", clickable: true }, 
+                    navigation: { nextEl: ".kelas-next", prevEl: ".kelas-prev" }, 
+                    breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } 
+                });
+            }
+        }
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
